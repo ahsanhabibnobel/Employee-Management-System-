@@ -1,52 +1,290 @@
-# Prerequisites
-*.d
+#include<stdio.h>
+#include <string.h>
+#include <stdlib.h>
+typedef struct employee
+{
+    char name[50];
+    char ID[20];
+    char designation[30];
+    char phone_no[20];
+} emp;
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+emp info[500];
+int l=0;
 
-# Linker output
-*.ilk
-*.map
-*.exp
+void add()
+{
+    emp e;
+    printf("Enter Name: ");
+    fflush(stdin);
+    gets(e.name);
+    printf("Enter ID: ");
+    gets(e.ID);
+    printf("Enter Designation: ");
+    gets(e.designation);
+    printf("Enter Phone Number: ");
+    gets(e.phone_no);
+    printf("\n");
+    info[l]=e;
+    l++;
 
-# Precompiled Headers
-*.gch
-*.pch
+}
+void modify()
+{
+    int i,j,k=0;
+    char ch[20];
+    printf("Enter Employee Id: ");
+    fflush(stdin);
+    gets(ch);
+    if(ch[0]>='0'&&ch[0]<='9')
+    {
+        for(i=0; i<l; i++)
+        {
+            if(strcmp(ch,info[i].ID)==0)
+            {
+                printf("Enter Name: ");
+                fflush(stdin);
+                gets(info[i].name);
+                printf("Enter ID: ");
+                gets(info[i].ID);
+                printf("Enter Designation: ");
+                gets(info[i].designation);
+                printf("Enter Phone Number: ");
+                gets(info[i].phone_no);
+                k=1;
+                break;
+            }
+        }
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+        if(k==1)
+        {
+            printf("Information has Upgraded.\n",ch);
+        }
+        else
+        {
+            printf("The Information not found on the record.\n") ;
+        }
+    }
+    else
+    {
+        printf("Invalid Input!.\n");
+    }
+    char c;
+    printf("Press c to clear -> ");
+    fflush(stdin);
+    scanf("%c",&c);
+    if(c=='c')
+    {
+        system("CLS");
+    }
+    else
+    {
+        return;
+    }
+}
+void delet()
+{
+    int i,j,k=0;
+    char ch[20];
+    printf("Enter Employee Id: ");
+    fflush(stdin);
+    gets(ch);
+    if(ch[0]>='0'&&ch[0]<='9')
+    {
+        for(i=0; i<l; i++)
+        {
+            if(strcmp(ch,info[i].ID)==0)
+            {
+                for(j=i; j<l; j++)
+                {
+                    strcpy(info[j].name,info[j+1].name);
+                    strcpy(info[j].ID,info[j+1].ID);
+                    strcpy(info[j].designation,info[j+1].designation);
+                    strcpy(info[j].phone_no,info[j+1].phone_no);
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+                }
+                l--;
+                k=1;
+                break;
+            }
+        }
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+        if(k==1)
+        {
+            printf("Erased all of %s's information from the record.\n",ch);
+        }
+        else
+        {
+            printf("The Information not found on the record.\n") ;
+        }
+    }
+    else
+    {
+        printf("Invalid Search!.\n");
+    }
+    char c;
+   printf("Press c to clear -> ");
+    fflush(stdin);
+    scanf("%c",&c);
+    if(c=='c')
+    {
+        system("CLS");
+    }
+    else
+    {
+        return;
+    }
+
+}
+void search()
+{
+    int i,j=0;
+    char ch[20];
+    printf("Enter Employee Id: ");
+    fflush(stdin);
+    gets(ch);
+
+    if(ch[0]>='0'&&ch[0]<='9')
+    {
+        for(i=0; i<l; i++)
+        {
+            if(strcmp(ch,info[i].ID)==0)
+            {
+                printf("Employee Information:\n");
+                printf("\tName:%s\n",info[i].name);
+                printf("\tID:%s\n",info[i].ID);
+                printf("\tDesignation:%s\n",info[i].designation);
+                printf("\tPhone Number%s\n",info[i].phone_no);
+                printf("\n");
+                j=1;
+                break;
+            }
+        }
+        if(j==0)
+        {
+            printf("The Search Information not found on the record.\n");
+        }
+
+
+    }
+    else
+    {
+        printf("Invalid Search!.\n");
+    }
+    char c;
+    printf("Press c to clear -> ");
+    fflush(stdin);
+    scanf("%c",&c);
+    if(c=='c')
+    {
+        system("CLS");
+    }
+    else
+    {
+        return;
+    }
+}
+void display()
+{
+    int i;
+
+
+    for(i=0; i<l; i++)
+    {
+        printf("List of Employers:\n");
+        printf("%d.",i+1);
+        printf("\tName:%s\n",info[i].name);
+        printf("\tId:%s\n",info[i].ID);
+        printf("\tDesignation:%s\n",info[i].designation);
+        printf("\tPhone Number:%s\n",info[i].phone_no);
+        printf("\n");
+    }
+
+    char c;
+    printf("Press c to clear -> ");
+    fflush(stdin);
+    scanf("%c",&c);
+    if(c=='c')
+    {
+        system("CLS");
+    }
+    else
+    {
+        return;
+    }
+
+}
+int main()
+{
+    char ch;
+    while(1)
+    {
+        printf("\tEMPLOYEE MANAGEMENT SYSTEM\n");
+        printf("\tPress 1 for Add Employee Information\n");
+        printf("\tPress 2 for List of the Employers.\n");
+        printf("\tPress 3 for Search for Employee.\n");
+        printf("\tPress 4 for Delete a record.\n");
+        printf("\tPress 5 for Upgrade Information.\n");
+        printf("\tPress c to clear screen.\n");
+        printf("\tPress 0 for exit.\n");
+        printf("Make your choice:");
+        fflush(stdin);
+
+        scanf("%c",&ch);
+        switch(ch)
+        {
+        case '1':
+            if(l==100)
+            {
+                printf("STORAGE FULL\n");
+                break;
+            }
+            add();
+            break;
+        case '2':
+            if(l==0)
+            {
+                printf("The Rocord List is Empty!\n");
+                break;
+            }
+            display();
+            break;
+        case '3':
+            if(l==0)
+            {
+                printf("The Rocord List is Empty!\n");
+                break;
+            }
+            search();
+            break;
+        case '4':
+            if(l==0)
+            {
+                printf("The Rocord List is Empty!\n");
+                break;
+            }
+            delet();
+            break;
+        case '5':
+            if(l==0)
+            {
+                printf("The Rocord List is Empty!\n");
+                break;
+            }
+            modify();
+            break;
+        case 'c':
+            system("CLS");
+            break;
+        case '0':
+            exit(0);
+        default:
+            printf("Invalid Imput!. Please Try Again.\n");
+            break;
+        }
+
+
+    }
+}
